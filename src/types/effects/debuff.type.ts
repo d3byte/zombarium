@@ -1,9 +1,8 @@
 import { EffectInterface } from './effect.type';
 
 export enum DebuffTypeEnum {
-  BLEED,
-  ILLNESS,
-  SPRAINED_LEG,
+  BLEED = 'BLEED',
+  ILLNESS = 'ILLNESS',
 }
 
 export interface DebuffInterface extends EffectInterface {

@@ -1,17 +1,50 @@
 import { useGameContext } from 'contexts/game.context';
-import { refreshEntityEnergy } from 'hoc/withGameContext/actions';
-import { useEffect } from 'react';
+import { usePlayerContext } from 'contexts/player.context';
+import { refreshEntityEnergy, setStats, setTurn } from 'hoc/withGameContext/actions';
+import { useEffect, useMemo } from 'react';
 import { EntityTypeEnum } from 'types/entities/entity.type';
+import { ZombieInterface } from 'types/entities/zombie.type';
+import { useZombies } from './use-zombies';
 
 export const useTurn = () => {
-  const { turn, dispatch } = useGameContext();
+  const {
+    currentLevel: { entities },
+    turn,
+    dispatch,
+    gameOver,
+  } = useGameContext();
+  const { zombieDoTurn } = useZombies();
+  const { player } = usePlayerContext();
+  const zombies = useMemo(
+    () => entities.filter((item) => item.type === EntityTypeEnum.ZOMBIE) as ZombieInterface[],
+    [entities],
+  );
 
   useEffect(() => {
     if (turn === EntityTypeEnum.ZOMBIE) {
-      dispatch(refreshEntityEnergy());
-      // do something
+      zombies.forEach(zombieDoTurn);
+      endTurn(EntityTypeEnum.PLAYER);
+    } else {
+      let stats = { ...player.stats };
+      [...player.debuffs, ...player.buffs].forEach((item) => (stats = item.turnModifier(stats)));
+
+      if (stats.hunger > 0) stats.hunger--;
+      else stats.hp--;
+
+      if (stats.hp <= 0) {
+        return gameOver();
+      }
+
+      dispatch(setStats(stats, player.id));
     }
   }, [turn]);
 
-  return {};
+  const endTurn = (newTurn: EntityTypeEnum) => {
+    dispatch(refreshEntityEnergy());
+    dispatch(setTurn(newTurn));
+  };
+
+  return {
+    endTurn,
+  };
 };

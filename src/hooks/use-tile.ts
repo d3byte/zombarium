@@ -10,19 +10,19 @@ const getEnergyForWalk = (from: EntityPositionInterface, to: EntityPositionInter
   if (from.x === to.x) return Math.abs(from.y - to.y) + Math.round(inventoryWeight / 10);
 };
 
-const getHasBarriersWithPlayer = (
-  playerPos: EntityPositionInterface,
+export const getHasBarriersWithEntity = (
+  entityPos: EntityPositionInterface,
   tilePos: EntityPositionInterface,
   tiles: TileInterface[][],
 ) => {
   const hasVerticalBarrier = tiles
-    .slice(Math.min(playerPos.y, tilePos.y), Math.max(playerPos.y, tilePos.y) + 1)
+    .slice(Math.min(entityPos.y, tilePos.y), Math.max(entityPos.y, tilePos.y) + 1)
     .reduce((hasBarrier: boolean, row: TileInterface[]) => {
-      return hasBarrier || BARRIER_TILES.includes(row[playerPos.x].type);
+      return hasBarrier || BARRIER_TILES.includes(row[entityPos.x].type);
     }, false);
 
-  const hasHorizontalBarrier = tiles[playerPos.y]
-    .slice(Math.min(playerPos.x, tilePos.x), Math.max(playerPos.x, tilePos.x) + 1)
+  const hasHorizontalBarrier = tiles[entityPos.y]
+    .slice(Math.min(entityPos.x, tilePos.x), Math.max(entityPos.x, tilePos.x) + 1)
     .reduce((hasBarrier: boolean, tile: TileInterface) => {
       return hasBarrier || BARRIER_TILES.includes(tile.type);
     }, false);
@@ -47,7 +47,7 @@ export const useTile = (position: EntityPositionInterface) => {
   const { player, inventoryWeight } = usePlayerContext();
   const tile = useMemo(() => tiles[position.y][position.x], [tiles]);
   const hasBarriersWithPlayer = useMemo(
-    () => getHasBarriersWithPlayer(player.position, position, tiles),
+    () => getHasBarriersWithEntity(player.position, position, tiles),
     [player.position, tile, tiles],
   );
   const isAllowedToWalkOn = useMemo(

@@ -1,6 +1,7 @@
-import { MAX_PLAYER_ENERGY, MAX_ZOMBIE_ENERGY } from 'constants/entity-stats.const';
+import { MAX_PLAYER_ENERGY, MAX_ZOMBIE_ENERGY, ZOMBIE_ATTACK_DAMAGE } from 'constants/entity-stats.const';
 import { GameStateInterface } from 'contexts/game.context';
 import { EntityTypeEnum } from 'types/entities/entity.type';
+import { PlayerInterface } from 'types/entities/player.type';
 import { GameActionInterface, GameActionTypeEnum } from './actions';
 
 export const gameStateReducer = (state: GameStateInterface, action: GameActionInterface): GameStateInterface => {
@@ -10,10 +11,10 @@ export const gameStateReducer = (state: GameStateInterface, action: GameActionIn
         ...state,
         turn: action.payload,
       };
-    case GameActionTypeEnum.SET_CURRENT_LEVEL:
+    case GameActionTypeEnum.RESET_STATE:
       return {
         ...state,
-        currentLevel: action.payload,
+        ...action.payload,
       };
     case GameActionTypeEnum.SET_POSITION:
       return {
@@ -92,6 +93,42 @@ export const gameStateReducer = (state: GameStateInterface, action: GameActionIn
                 energy: item.type === EntityTypeEnum.PLAYER ? MAX_PLAYER_ENERGY : MAX_ZOMBIE_ENERGY,
               },
             };
+          }),
+        },
+      };
+    case GameActionTypeEnum.ZOMBIE_ATTACK:
+      return {
+        ...state,
+        currentLevel: {
+          ...state.currentLevel,
+          entities: state.currentLevel.entities.map((item) => {
+            if (item.type === EntityTypeEnum.PLAYER) {
+              return {
+                ...item,
+                stats: {
+                  ...item.stats,
+                  hp: item.stats.hp - ZOMBIE_ATTACK_DAMAGE,
+                },
+                debuffs: action.payload,
+              } as PlayerInterface;
+            }
+            return item;
+          }),
+        },
+      };
+    case GameActionTypeEnum.SET_STATS:
+      return {
+        ...state,
+        currentLevel: {
+          ...state.currentLevel,
+          entities: state.currentLevel.entities.map((item) => {
+            if (item.id === action.payload.entityId) {
+              return {
+                ...item,
+                stats: action.payload.stats,
+              };
+            }
+            return item;
           }),
         },
       };

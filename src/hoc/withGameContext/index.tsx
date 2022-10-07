@@ -7,6 +7,7 @@ import { levelGenerator } from 'generator';
 import { EntityTypeEnum } from 'types/entities/entity.type';
 
 import { gameStateReducer } from './reducer';
+import { resetState } from './actions';
 
 const defaultState: GameStateInterface = {
   currentLevel: levelGenerator(),
@@ -18,9 +19,14 @@ export const withGameContext = <T,>(Child: FC<T>) => {
   const WithGameContext = (props: T) => {
     const [state, dispatch] = useReducer(gameStateReducer, defaultState);
 
+    const gameOver = () => {
+      dispatch(resetState({ ...defaultState, currentLevel: levelGenerator() }));
+    };
+
     const contextValue = useMemo<GameContextInterface>(
       () => ({
         ...state,
+        gameOver,
         dispatch,
       }),
       [state],

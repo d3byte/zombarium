@@ -13,12 +13,14 @@ export interface GameStateInterface {
 
 export interface GameContextInterface extends GameStateInterface {
   dispatch: Dispatch<any>;
+  gameOver: () => void;
 }
 
 export const GameContext = createContext<GameContextInterface>({
   currentLevel: undefined,
   turn: undefined,
   dispatch: noop,
+  gameOver: noop,
 } as unknown as GameContextInterface);
 
 export const useGameContext = () => useContext(GameContext);
