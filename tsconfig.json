@@ -18,9 +18,26 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "baseUrl": "./src",
+    "paths": {
+      "app/*": ["./app/*"],
+      "utils/*": ["./utils/*"],
+      "menu/*": ["./menu/*"],
+      "services/*": ["./services/*"],
+      "model/*": ["./model/*"],
+      "constants/*": ["./constants/*"],
+      "components/*": ["./components/*"],
+      "hoc/*": ["./hoc/*"],
+      "contexts/*": ["./contexts/*"],
+      "hooks/*": ["./hooks/*"],
+      "types/*": ["./types/*"],
+      "generator/*": ["./generator/*"],
+      "game/*": ["./game/*"],
+      "factories/*": ["./factories/*"],
+    }
   },
   "include": [
-    "src"
+    "src/**/*"
   ]
 }
