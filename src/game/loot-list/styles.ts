@@ -47,7 +47,7 @@ export const LootListItem = styled.li`
     grid-template-columns: repeat(3, 1fr);
     font-size: 14px;
     margin-bottom: 10px;
-    justify-content: space-between;
+    align-items: center;
 `;
 
 export const EmptyInventory = styled.div`
