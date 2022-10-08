@@ -14,5 +14,5 @@ export interface PlayerInterface extends Omit<EntityInterface, 'stats'> {
   inventory: ItemInterface[];
   debuffs: DebuffInterface[];
   buffs: BuffInterface[];
-  equippedWeapon: WeaponInterface | null;
+  equippedWeapon?: WeaponInterface;
 }

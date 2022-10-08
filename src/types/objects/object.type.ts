@@ -8,4 +8,5 @@ export enum ObjectTypeEnum {
 export interface ObjectInterface extends BaseInterface {
   type: ObjectTypeEnum;
   loot: ItemInterface[];
+  title: string;
 }

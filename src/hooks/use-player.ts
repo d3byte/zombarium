@@ -43,7 +43,7 @@ export const usePlayer = () => {
         player.equippedWeapon.damageInterval[1],
       );
       const leftHp = zombie.stats.hp - dealtDamage;
-      if (leftHp) {
+      if (leftHp > 0) {
         dispatch(setStat('hp', leftHp, zombie.id));
       } else {
         dispatch(deleteZombie(zombie.id));

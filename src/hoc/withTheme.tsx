@@ -10,8 +10,8 @@ export const AppThemeProvider: FC<{ children: ReactNode }> = ({ children }) => (
   <ThemeProvider theme={theme}>{children}</ThemeProvider>
 );
 
-export const withTheme = <T,>(Child: FC<T>) => {
-  const WithTheme = (props: T) => (
+export const withTheme = (Child: FC<any>) => {
+  const WithTheme = (props: any) => (
     <AppThemeProvider>
       <Child {...props} />
     </AppThemeProvider>

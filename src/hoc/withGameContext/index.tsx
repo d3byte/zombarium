@@ -13,10 +13,11 @@ const defaultState: GameStateInterface = {
   currentLevel: levelGenerator(),
   turn: EntityTypeEnum.PLAYER,
   openedObject: undefined,
+  walkMode: true,
 };
 
-export const withGameContext = <T,>(Child: FC<T>) => {
-  const WithGameContext = (props: T) => {
+export const withGameContext = (Child: FC<any>) => {
+  const WithGameContext = (props: any) => {
     const [state, dispatch] = useReducer(gameStateReducer, defaultState);
 
     const gameOver = () => {

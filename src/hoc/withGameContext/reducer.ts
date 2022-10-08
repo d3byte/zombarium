@@ -11,6 +11,11 @@ export const gameStateReducer = (state: GameStateInterface, action: GameActionIn
         ...state,
         turn: action.payload,
       };
+    case GameActionTypeEnum.SET_WALK_MODE:
+      return {
+        ...state,
+        walkMode: action.payload,
+      };
     case GameActionTypeEnum.RESET_STATE:
       return {
         ...state,
@@ -56,6 +61,11 @@ export const gameStateReducer = (state: GameStateInterface, action: GameActionIn
         ...state,
         openedObject: action.payload,
       };
+    case GameActionTypeEnum.SET_OPENED_INVENTORY:
+        return {
+          ...state,
+          openedInventory: action.payload,
+        };
     case GameActionTypeEnum.DELETE_ZOMBIE:
       return {
         ...state,
@@ -126,6 +136,55 @@ export const gameStateReducer = (state: GameStateInterface, action: GameActionIn
               return {
                 ...item,
                 stats: action.payload.stats,
+              };
+            }
+            return item;
+          }),
+        },
+      };
+    case GameActionTypeEnum.REMOVE_INVENTORY_ITEM:
+      return {
+        ...state,
+        currentLevel: {
+          ...state.currentLevel,
+          entities: state.currentLevel.entities.map((item) => {
+            if (item.id === action.payload.id) {
+              return {
+                ...item,
+                inventory: (item as PlayerInterface).inventory.filter(lootItem => lootItem.id !== action.payload.itemId),
+              };
+            }
+            return item;
+          }),
+        },
+      };
+    case GameActionTypeEnum.SET_EFFECTS:
+      return {
+        ...state,
+        currentLevel: {
+          ...state.currentLevel,
+          entities: state.currentLevel.entities.map((item) => {
+            if (item.type === EntityTypeEnum.PLAYER) {
+              return {
+                ...item,
+                buffs: action.payload.buffs,
+                debuffs: action.payload.debuffs,
+              };
+            }
+            return item;
+          }),
+        },
+      };
+    case GameActionTypeEnum.SET_WEAPON:
+      return {
+        ...state,
+        currentLevel: {
+          ...state.currentLevel,
+          entities: state.currentLevel.entities.map((item) => {
+            if (item.type === EntityTypeEnum.PLAYER) {
+              return {
+                ...item,
+                equippedWeapon: action.payload,
               };
             }
             return item;

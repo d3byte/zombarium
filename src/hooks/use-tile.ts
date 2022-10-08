@@ -1,13 +1,15 @@
 import { BARRIER_TILES } from 'constants/barrier-tiles.const';
+import { ENERGY_TO_LOOT_OBJECT } from 'constants/entity-stats.const';
 import { useGameContext } from 'contexts/game.context';
 import { usePlayerContext } from 'contexts/player.context';
 import { useMemo } from 'react';
-import { EntityPositionInterface } from 'types/entities/entity.type';
+import { EntityInterface, EntityPositionInterface, EntityTypeEnum } from 'types/entities/entity.type';
 import { TileInterface } from 'types/game/tile.type';
 
 const getEnergyForWalk = (from: EntityPositionInterface, to: EntityPositionInterface, inventoryWeight: number) => {
   if (from.y === to.y) return Math.abs(from.x - to.x) + Math.round(inventoryWeight / 10);
   if (from.x === to.x) return Math.abs(from.y - to.y) + Math.round(inventoryWeight / 10);
+  return 0;
 };
 
 export const getHasBarriersWithEntity = (
@@ -34,39 +36,54 @@ const getIsAllowedToWalkOn = (
   hasBarriers: boolean[],
   playerPos: EntityPositionInterface,
   tilePos: EntityPositionInterface,
+  entity?: EntityInterface,
 ) => {
-  if (playerPos.y === tilePos.y) return !hasBarriers[0];
-  if (playerPos.x === tilePos.x) return !hasBarriers[1];
+  if (playerPos.y === tilePos.y) return !hasBarriers[0] && !entity;
+  if (playerPos.x === tilePos.x) return !hasBarriers[1] && !entity;
   return false;
 };
 
-export const useTile = (position: EntityPositionInterface) => {
+const getIsAttackPossible = (playerPos: EntityPositionInterface, position: EntityPositionInterface, entity?: EntityInterface) => {
+  return !!entity && (Math.abs(playerPos.y - position.y) === 1 || Math.abs(playerPos.x - position.x) === 1);
+};
+
+export const useTile = (position: EntityPositionInterface, tile: TileInterface) => {
   const {
     currentLevel: { tiles, entities },
   } = useGameContext();
   const { player, inventoryWeight } = usePlayerContext();
-  const tile = useMemo(() => tiles[position.y][position.x], [tiles]);
   const hasBarriersWithPlayer = useMemo(
     () => getHasBarriersWithEntity(player.position, position, tiles),
-    [player.position, tile, tiles],
-  );
-  const isAllowedToWalkOn = useMemo(
-    () => getIsAllowedToWalkOn(hasBarriersWithPlayer, player.position, position),
-    [hasBarriersWithPlayer, player.position, tile],
-  );
-  const energyForWalk = useMemo(
-    () => getEnergyForWalk(player.position, position, inventoryWeight),
-    [player.position, tiles, tile, inventoryWeight],
+    [player.position, tiles, position],
   );
   const entity = useMemo(
     () => entities.find(({ position: { x, y } }) => x === position.x && y === position.y),
-    [entities],
+    [entities, position],
   );
+  const isAllowedToWalkOn = useMemo(
+    () => getIsAllowedToWalkOn(hasBarriersWithPlayer, player.position, position, entity),
+    [hasBarriersWithPlayer, player.position, position, entity],
+  );
+  const energyForWalk = useMemo(
+    () => getEnergyForWalk(player.position, position, inventoryWeight),
+    [player.position, position, inventoryWeight],
+  );
+  const isEntityPlayer = useMemo(() => entity?.type === EntityTypeEnum.PLAYER, [entity]);
+  const hasEnoughEnergyToWalkOn = useMemo(() => player.stats.energy >= energyForWalk, [energyForWalk, player.stats]);
+  const energyForAttack = useMemo(() => player.equippedWeapon?.weight || 0, [player.equippedWeapon]);
+  const hasEnoughEnergyToAttack = useMemo(() => !!player.equippedWeapon && player.stats.energy >= energyForAttack, [player.equippedWeapon, player.stats, energyForAttack]);
+  const isAttackPossible = useMemo(() => getIsAttackPossible(player.position, position, entity), [player.position, entity, position]);
+  const canLootObject = useMemo(() => !!tile.object && player.stats.energy >= ENERGY_TO_LOOT_OBJECT && isEntityPlayer, [player.stats, tile, isEntityPlayer]);
 
   return {
-    tile,
     isAllowedToWalkOn,
     energyForWalk,
     entity,
+    isEntityPlayer,
+    hasEnoughEnergyToWalkOn,
+    isAttackPossible,
+    energyForAttack,
+    hasEnoughEnergyToAttack,
+    canLootObject
   };
 };

@@ -1,12 +1,12 @@
-import React, { useMemo, useReducer } from 'react';
+import React from 'react';
 import { getDisplayName } from 'utils/getDisplayName';
 
 import type { FC } from 'react';
 import { PlayerContext } from 'contexts/player.context';
 import { usePlayer } from 'hooks/use-player';
 
-export const withPlayerContext = <T,>(Child: FC<T>) => {
-  const WithPlayerContext = (props: T) => {
+export const withPlayerContext = (Child: FC<any>) => {
+  const WithPlayerContext = (props: any) => {
     const context = usePlayer();
 
     return (

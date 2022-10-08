@@ -42,13 +42,20 @@ export const useZombies = () => {
       const travelDistance = Math.max(MAX_ZOMBIE_ENERGY, Math.abs(playerPos.x - zombie.position.x));
       energy -= travelDistance;
       handledPosition.x =
-        playerPos.x > handledPosition.x ? handledPosition.x + travelDistance : handledPosition.x - travelDistance;
+        playerPos.x > zombie.position.x ? handledPosition.x + travelDistance : handledPosition.x - travelDistance;
+      if (handledPosition.x === playerPos.x) {
+        handledPosition.x = playerPos.x > zombie.position.x ? handledPosition.x - 1 : handledPosition.x + 1;
+      }
     }
     if (!barriers[1] && zombie.position.y !== playerPos.y) {
       const travelDistance = Math.max(energy, Math.abs(playerPos.y - zombie.position.y));
       energy -= travelDistance;
       handledPosition.y =
-        playerPos.y > handledPosition.y ? handledPosition.y + travelDistance : handledPosition.y - travelDistance;
+        playerPos.y > zombie.position.y ? handledPosition.y + travelDistance : handledPosition.y - travelDistance;
+      
+      if (handledPosition.y === playerPos.y) {
+        handledPosition.y = playerPos.y > zombie.position.y ? handledPosition.y - 1 : handledPosition.y + 1;
+      }
     }
     dispatch(setStat('energy', energy, zombie.id));
     dispatch(setPosition(handledPosition, zombie.id));

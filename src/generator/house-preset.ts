@@ -11,28 +11,26 @@ export const housePreset = () => {
     return objectFactory({
       type: ObjectTypeEnum.CHEST,
       loot: randomLoot(),
+      title: 'Сундук'
     });
   };
   const verticalWall = () =>
     tileFactory({
       type: TileTypeEnum.WALL_VERTICAL,
       object: undefined,
-      entity: undefined,
     });
   return [
-    getArray(6, (index: number) =>
+    getArray(7, () =>
       tileFactory({
-        type: index === 3 ? TileTypeEnum.DOOR : TileTypeEnum.WALL_HORIZONTAL,
-        object: index === 4 ? chest() : undefined,
-        entity: undefined,
+        type: TileTypeEnum.WALL_HORIZONTAL,
+        object: undefined,
       }),
     ),
-    ...getArray(4, () => [verticalWall(), ...getArray(4, floor), verticalWall()]),
-    getArray(6, (index: number) =>
+    ...getArray(5, (y) => [verticalWall(), ...getArray(5, (x) => floor(x === 0 && y === 4 ? chest() : undefined)), verticalWall()]),
+    getArray(7, (index: number) =>
       tileFactory({
         type: index === 3 ? TileTypeEnum.DOOR : TileTypeEnum.WALL_HORIZONTAL,
-        object: index === 2 ? chest() : undefined,
-        entity: undefined,
+        object: undefined,
       }),
     ),
   ];

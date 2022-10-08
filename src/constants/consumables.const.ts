@@ -65,15 +65,6 @@ export const CONSUMABLES: ConsumableInterface[] = [
     debuffsRemoved: [DebuffTypeEnum.ILLNESS],
   }),
   consumableFactory({
-    title: 'Шина',
-    weight: 0.1,
-    spawnChance: 0.2,
-    statsModifier: (stats: PlayerStatsInterface) => stats,
-    buffsApplied: [],
-    debuffsInflicted: [],
-    debuffsRemoved: [DebuffTypeEnum.SPRAINED_LEG],
-  }),
-  consumableFactory({
     title: 'Энергетик',
     weight: 0.1,
     spawnChance: 0.3,
