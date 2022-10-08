@@ -11,11 +11,6 @@ export const gameStateReducer = (state: GameStateInterface, action: GameActionIn
         ...state,
         turn: action.payload,
       };
-    case GameActionTypeEnum.SET_WALK_MODE:
-      return {
-        ...state,
-        walkMode: action.payload,
-      };
     case GameActionTypeEnum.RESET_STATE:
       return {
         ...state,
@@ -79,11 +74,20 @@ export const gameStateReducer = (state: GameStateInterface, action: GameActionIn
         ...state,
         currentLevel: {
           ...state.currentLevel,
+          objects: state.currentLevel.objects.map((item) => {
+            if (item.id === action.payload.object.id) {
+              return {
+                ...item,
+                loot: item.loot.filter(loot => !action.payload.lootIds.includes(loot.id)),
+              };
+            }
+            return item;
+          }),
           entities: state.currentLevel.entities.map((item) => {
             if (item.id === action.payload.id) {
               return {
                 ...item,
-                inventory: action.payload.loot,
+                inventory: [...(item as PlayerInterface).inventory, ...action.payload.loot],
               };
             }
             return item;

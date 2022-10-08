@@ -1,4 +1,5 @@
 import { BaseInterface } from 'types/base.type';
+import { PositionInterface } from 'types/game/position.type';
 
 export enum EntityTypeEnum {
   ZOMBIE,
@@ -10,13 +11,8 @@ export interface EntityStatsInterface {
   energy: number;
 }
 
-export interface EntityPositionInterface {
-  x: number;
-  y: number;
-}
-
 export interface EntityInterface extends BaseInterface {
   type: EntityTypeEnum;
   stats: EntityStatsInterface;
-  position: EntityPositionInterface;
+  position: PositionInterface;
 }

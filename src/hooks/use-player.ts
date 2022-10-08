@@ -2,9 +2,10 @@ import { ENERGY_TO_LOOT_OBJECT } from 'constants/entity-stats.const';
 import { useGameContext } from 'contexts/game.context';
 import { deleteZombie, setOpenedObject, setPosition, setStat } from 'hoc/withGameContext/actions';
 import { useMemo } from 'react';
-import { EntityPositionInterface, EntityTypeEnum } from 'types/entities/entity.type';
+import { EntityTypeEnum } from 'types/entities/entity.type';
 import { PlayerInterface } from 'types/entities/player.type';
 import { ZombieInterface } from 'types/entities/zombie.type';
+import { PositionInterface } from 'types/game/position.type';
 import { ItemInterface } from 'types/items/item.type';
 import { ObjectInterface } from 'types/objects/object.type';
 import { randomIntFromInterval } from 'utils/random-int-from-interval';
@@ -21,7 +22,7 @@ export const usePlayer = () => {
     [player.inventory],
   );
 
-  const walkTo = (position: EntityPositionInterface, energyToSpend: number) => {
+  const walkTo = (position: PositionInterface, energyToSpend: number) => {
     if (player.stats.energy >= energyToSpend) {
       dispatch(setStat('energy', player.stats.energy - energyToSpend, player.id));
       dispatch(setPosition(position, player.id));

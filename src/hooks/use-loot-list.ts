@@ -5,9 +5,10 @@ import { useMemo, useState } from 'react';
 import { ConsumableInterface } from 'types/items/consumable.type';
 import { ItemInterface } from 'types/items/item.type';
 import { WeaponInterface } from 'types/items/weapon.type';
+import { ObjectInterface } from 'types/objects/object.type';
 
 export const useLootList = () => {
-  const { openedObject, openedInventory, dispatch } = useGameContext();
+  const { openedObject,  openedInventory, dispatch } = useGameContext();
   const { player } = usePlayerContext();
   const [takenLoot, setTakenLoot] = useState<ItemInterface[]>([]);
   const isInventory = useMemo(() => !openedObject && openedInventory, [openedObject, openedInventory]);
@@ -15,7 +16,7 @@ export const useLootList = () => {
   const lootList = useMemo(() => isInventory ? player.inventory : openedObject?.loot?.filter(item => !takenLootItemsIds.includes(item.id)) as ItemInterface[], [isInventory, takenLootItemsIds, player.inventory, openedObject]);
 
   const takeAll = () => {
-    dispatch(addLootToInventory(openedObject?.loot || [], player.id));
+    dispatch(addLootToInventory([...(openedObject?.loot || []), ...takenLoot], player.id, openedObject as ObjectInterface));
     closeLootList();
   };
 
@@ -27,7 +28,7 @@ export const useLootList = () => {
     if (isInventory) {
       dispatch(setOpenedInventory(false));
     } else {
-      dispatch(addLootToInventory(takenLoot, player.id));
+      dispatch(addLootToInventory(takenLoot, player.id, openedObject as ObjectInterface));
       dispatch(setOpenedObject(undefined));
     }
   };

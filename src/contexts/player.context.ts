@@ -1,15 +1,15 @@
 import { createContext, useContext } from 'react';
-import { EntityPositionInterface } from 'types/entities/entity.type';
 import { PlayerInterface } from 'types/entities/player.type';
 import { ZombieInterface } from 'types/entities/zombie.type';
+import { PositionInterface } from 'types/game/position.type';
 import { ObjectInterface } from 'types/objects/object.type';
 import { noop } from 'utils/noop';
 
 export interface PlayerContextInterface {
   player: PlayerInterface;
   inventoryWeight: number;
-  walkTo: (position: EntityPositionInterface, energyToSpend: number) => void;
-  lootObject: (object: ObjectInterface) => void;
+  walkTo: (position: PositionInterface, energyToSpend: number) => void;
+  lootObject: (object: ObjectInterface, tilePos: PositionInterface) => void;
   attack: (zombie: ZombieInterface) => void;
 }
 

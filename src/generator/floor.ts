@@ -1,9 +1,7 @@
 import { tileFactory } from 'factories/tile.factory';
 import { TileTypeEnum } from 'types/game/tile.type';
-import { ObjectInterface } from 'types/objects/object.type';
 
-export const floor = (object?: ObjectInterface) =>
+export const floor = () =>
   tileFactory({
-    type: TileTypeEnum.FLOOR,
-    object,
+    type: TileTypeEnum.FLOOR
   });

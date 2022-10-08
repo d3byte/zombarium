@@ -15,7 +15,7 @@ export const Stats = () => {
                 Голод: {stats.hunger}
             </StatsItem>
             <StatsItem>
-                Вес инвентаря: {inventoryWeight}
+                Вес инвентаря: {inventoryWeight.toFixed(2)}
             </StatsItem>
         </StatsContainer>
     );

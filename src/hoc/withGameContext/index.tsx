@@ -13,7 +13,6 @@ const defaultState: GameStateInterface = {
   currentLevel: levelGenerator(),
   turn: EntityTypeEnum.PLAYER,
   openedObject: undefined,
-  walkMode: true,
 };
 
 export const withGameContext = (Child: FC<any>) => {

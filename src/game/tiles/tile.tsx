@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTile } from 'hooks/use-tile';
-import { EntityPositionInterface, EntityTypeEnum } from 'types/entities/entity.type';
+import { EntityTypeEnum } from 'types/entities/entity.type';
 import { TileInterface } from 'types/game/tile.type';
 import { TileContainer, Object, TileWrapper, Entity } from './styles';
 import { ReactComponent as PlayerSvg } from 'assets/Player.svg';
@@ -9,10 +9,11 @@ import { TileInfo } from './info';
 import { usePlayerContext } from 'contexts/player.context';
 import { ZombieInterface } from 'types/entities/zombie.type';
 import { ObjectInterface } from 'types/objects/object.type';
+import { PositionInterface } from 'types/game/position.type';
 
 export interface TileProps {
     tile: TileInterface;
-    position: EntityPositionInterface;
+    position: PositionInterface;
 }
 
 const getEntitySvg = (type: EntityTypeEnum) => {
@@ -28,7 +29,7 @@ const getEntitySvg = (type: EntityTypeEnum) => {
 
 export const Tile = ({ tile, position }: TileProps) => {
     const { walkTo, attack, lootObject } = usePlayerContext();
-    const { entity, isEntityPlayer, canLootObject, isAllowedToWalkOn, isAttackPossible, energyForWalk, ...rest } = useTile(position, tile);
+    const { entity, object, isEntityPlayer, canLootObject, isAllowedToWalkOn, isAttackPossible, energyForWalk, ...rest } = useTile(position, tile);
 
     const onClick = () => {
         if (isAttackPossible && entity) {
@@ -41,14 +42,14 @@ export const Tile = ({ tile, position }: TileProps) => {
     const onObjectClick = (e: any) => {
         e.stopPropagation();
         if (canLootObject) {
-            lootObject(tile.object as ObjectInterface);
+            lootObject(object as ObjectInterface, position);
         }
     }
 
     return (
         <TileWrapper type={tile.type}>
             <TileContainer onClick={onClick}>
-                {tile.object && <Object isSameTileWithPlayer={isEntityPlayer} canLoot={canLootObject} onClick={onObjectClick} />}
+                {object && <Object isSameTileWithPlayer={isEntityPlayer} canLoot={canLootObject} onClick={onObjectClick} />}
                 {entity && <Entity>{getEntitySvg(entity.type)}</Entity>}
                 <TileInfo entity={entity} isEntityPlayer={isEntityPlayer} isAllowedToWalkOn={isAllowedToWalkOn} isAttackPossible={isAttackPossible} energyForWalk={energyForWalk} {...rest} />
             </TileContainer>

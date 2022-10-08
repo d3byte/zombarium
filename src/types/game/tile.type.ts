@@ -1,5 +1,4 @@
 import { BaseInterface } from 'types/base.type';
-import { ObjectInterface } from 'types/objects/object.type';
 
 export enum TileTypeEnum {
   FLOOR,
@@ -10,5 +9,4 @@ export enum TileTypeEnum {
 
 export interface TileInterface extends BaseInterface {
   type: TileTypeEnum;
-  object?: ObjectInterface;
 }

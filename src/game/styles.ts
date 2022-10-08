@@ -1,4 +1,6 @@
-import styled, { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle, css, keyframes } from 'styled-components';
+
+export const DAMAGE_ANIMATION_DURATION = 2000;
 
 export const GlobalStyles = createGlobalStyle`
     body {
@@ -11,11 +13,27 @@ export const GlobalStyles = createGlobalStyle`
     }
 `;
 
-export const TilesWrapper = styled.div`
+const damageKeyframes = keyframes`
+    0% {
+        border-color: white;
+    }
+
+    50% {
+        border-color: red;
+    }
+
+    100% {
+        border-color: white;
+    }
+`;
+
+export const TilesWrapper = styled.div<{ showDamageAnimation?: boolean; }>`
     flex-grow: 1;
     overflow: auto;
     box-sizing: border-box;
     padding-bottom: 100px;
+    border: 4px solid white;
+    ${({ showDamageAnimation }) => showDamageAnimation ? css`animation: ${DAMAGE_ANIMATION_DURATION / 1000}s ${damageKeyframes} ease-in-out;` : ''}
 `;
 
 export const GameLayout = styled.section`

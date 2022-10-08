@@ -33,3 +33,14 @@ export const FooterContainer = styled.footer`
     border-top: 1px solid #4D5061;
     color: #0D090A;
 `;
+
+export const GetStyledIcon = (icon: any) => styled(icon)`
+    width: 20px;
+    height: 20px;
+`;
+
+export const EffectsContainer = styled.div`
+    display: inline-flex;
+    column-gap: 20px;
+    align-items: center;
+`;

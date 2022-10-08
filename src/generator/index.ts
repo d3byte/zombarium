@@ -5,6 +5,7 @@ import { levelFactory } from 'factories/level.factory';
 import { entitiesPreset } from './entities-preset';
 import { housePreset } from './house-preset';
 import { floor } from './floor';
+import { objectsPreset } from './objects-preset';
 
 export const levelGenerator = (): LevelInterface => {
   const house = housePreset();
@@ -15,10 +16,9 @@ export const levelGenerator = (): LevelInterface => {
     getArray(13, () => floor()),
   ];
 
-  const entities = entitiesPreset(tiles);
-
   return levelFactory({
     tiles,
-    entities,
+    entities: entitiesPreset(tiles),
+    objects: objectsPreset,
   });
 };

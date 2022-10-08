@@ -1,7 +1,8 @@
 import { GameStateInterface } from 'contexts/game.context';
 import { BuffInterface } from 'types/effects/buff.type';
 import { DebuffInterface } from 'types/effects/debuff.type';
-import { EntityPositionInterface, EntityStatsInterface, EntityTypeEnum } from 'types/entities/entity.type';
+import { EntityStatsInterface, EntityTypeEnum } from 'types/entities/entity.type';
+import { PositionInterface } from 'types/game/position.type';
 import { ItemInterface } from 'types/items/item.type';
 import { WeaponInterface } from 'types/items/weapon.type';
 import { ObjectInterface } from 'types/objects/object.type';
@@ -37,7 +38,7 @@ export const setTurn = (turn: EntityTypeEnum) => ({
   type: GameActionTypeEnum.SET_TURN,
   payload: turn,
 });
-export const setPosition = (position: EntityPositionInterface, entityId: string) => ({
+export const setPosition = (position: PositionInterface, entityId: string) => ({
   type: GameActionTypeEnum.SET_POSITION,
   payload: { position, entityId },
 });
@@ -57,9 +58,9 @@ export const deleteZombie = (id: string) => ({
   type: GameActionTypeEnum.DELETE_ZOMBIE,
   payload: id,
 });
-export const addLootToInventory = (loot: ItemInterface[], id: string) => ({
+export const addLootToInventory = (loot: ItemInterface[], id: string, object: ObjectInterface) => ({
   type: GameActionTypeEnum.ADD_LOOT,
-  payload: { loot, id },
+  payload: { loot, lootIds: loot.map(item => item.id), id, object },
 });
 export const removeItemFromInventory = (item: ItemInterface, entityId: string) => ({
   type: GameActionTypeEnum.REMOVE_INVENTORY_ITEM,
@@ -71,10 +72,6 @@ export const refreshEntityEnergy = () => ({
 export const zombieAttack = (debuffs: DebuffInterface[]) => ({
   type: GameActionTypeEnum.ZOMBIE_ATTACK,
   payload: debuffs,
-});
-export const setWalkMode = (walkMode: boolean) => ({
-  type: GameActionTypeEnum.SET_WALK_MODE,
-  payload: walkMode,
 });
 export const setOpenedInventory = (value: boolean) => ({
   type: GameActionTypeEnum.SET_OPENED_INVENTORY,

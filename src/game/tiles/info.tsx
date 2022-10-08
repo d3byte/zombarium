@@ -1,5 +1,5 @@
 import { useGameContext } from "contexts/game.context";
-import { EntityInterface } from "types/entities/entity.type";
+import { EntityInterface, EntityTypeEnum } from "types/entities/entity.type";
 import { StyledAttackIcon, StyledEnergyIcon, TileInfoContainer, TileInfoFooter, TileInfoWrapper } from "./styles";
 
 interface TileInfoProps {
@@ -14,9 +14,9 @@ interface TileInfoProps {
 }
 
 export const TileInfo = ({ entity, isEntityPlayer, isAllowedToWalkOn, energyForWalk, hasEnoughEnergyToWalkOn, isAttackPossible, energyForAttack, hasEnoughEnergyToAttack }: TileInfoProps) => {
-    const { walkMode } = useGameContext();
+    const { turn } = useGameContext();
 
-    if (isEntityPlayer || !walkMode || (!isAttackPossible && !isAllowedToWalkOn)) {
+    if (isEntityPlayer || turn !== EntityTypeEnum.PLAYER || (!isAttackPossible && !isAllowedToWalkOn)) {
         return null;
     }
 

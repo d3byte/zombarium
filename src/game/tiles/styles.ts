@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components';
-import { EntityTypeEnum } from 'types/entities/entity.type';
 import { TileTypeEnum } from 'types/game/tile.type';
 import { ReactComponent as EnergyIcon } from 'assets/energy.svg';
 import { ReactComponent as AttackIcon } from 'assets/attack.svg';
@@ -40,11 +39,6 @@ const tileTypeBasedCss = {
     [TileTypeEnum.WALL_VERTICAL]: css`
         background: #ccc;
     `,
-};
-
-const entityTypeBasedCss = {
-    [EntityTypeEnum.PLAYER]: css``,
-    [EntityTypeEnum.ZOMBIE]: css``,
 };
 
 export const TileWrapper = styled.div<{ type: TileTypeEnum; }>`
