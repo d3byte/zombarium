@@ -9,16 +9,14 @@ const Bleeding = GetStyledIcon(BleedingIcon);
 const Illness = GetStyledIcon(IllnessIcon);
 
 const mapDebuffToIcon = {
-    [DebuffTypeEnum.BLEED]: <Bleeding title="Кровотечение" />,
-    [DebuffTypeEnum.ILLNESS]: <Illness title="Болезнь" />,
+  [DebuffTypeEnum.BLEED]: <Bleeding title="Кровотечение" />,
+  [DebuffTypeEnum.ILLNESS]: <Illness title="Болезнь" />,
 };
 
 export const Effects = () => {
-    const { player: { debuffs } } = usePlayerContext();
+  const {
+    player: { debuffs },
+  } = usePlayerContext();
 
-    return (
-        <EffectsContainer>
-            {debuffs.map(debuff => mapDebuffToIcon[debuff.type])}
-        </EffectsContainer>
-    );
+  return <EffectsContainer>{debuffs.map((debuff) => mapDebuffToIcon[debuff.type])}</EffectsContainer>;
 };

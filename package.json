@@ -24,7 +24,8 @@
     "eject": "react-scripts eject",
     "format": "prettier --write src/**/*.ts{,x}",
     "lint": "eslint src/**/*.ts{,x}",
-    "lint:fix": "eslint \"src/**/*.{js,ts,tsx}\" --quiet --fix"
+    "lint:fix": "eslint \"src/**/*.{js,ts,tsx}\" --quiet --fix",
+    "fix-files": "npm run lint:fix & npm run format"
   },
   "eslintConfig": {
     "extends": [
@@ -50,7 +51,7 @@
     "@typescript-eslint/parser": "^5.39.0",
     "eslint-config-airbnb-typescript": "^6.3.2",
     "eslint-config-prettier": "^8.5.0",
-    "eslint-import-resolver-typescript": "^3.5.1",
+    "eslint-import-resolver-typescript": "^2.7.1",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jest": "^27.1.1",
     "eslint-plugin-jsx-a11y": "^6.6.1",

@@ -12,7 +12,11 @@ export const randomLoot = (): ItemInterface[] => {
   const maxLootAmount = Math.max(MAX_LOOT_PER_OBJECT, all_items.length);
   const lootAmount = randomIntFromInterval(0, maxLootAmount);
 
-  return Array.from(new Set(getArray(lootAmount, () => {
-    return shuffle(all_items).find(({ spawnChance }) => spawnChance === parseFloat(Math.random().toFixed(1)));
-  }).filter(Boolean))) as ItemInterface[];
+  return Array.from(
+    new Set(
+      getArray(lootAmount, () => {
+        return shuffle(all_items).find(({ spawnChance }) => spawnChance === parseFloat(Math.random().toFixed(1)));
+      }).filter(Boolean),
+    ),
+  ) as ItemInterface[];
 };

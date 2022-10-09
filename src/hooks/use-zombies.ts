@@ -12,11 +12,7 @@ import { ZombieInterface } from 'types/entities/zombie.type';
 import { PositionInterface } from 'types/game/position.type';
 import { getHasBarriersWithEntity } from './use-tile';
 
-const isPlayerInAggro = (
-  playerPos: PositionInterface,
-  zombiePos: PositionInterface,
-  barriers: boolean[],
-): boolean => {
+const isPlayerInAggro = (playerPos: PositionInterface, zombiePos: PositionInterface, barriers: boolean[]): boolean => {
   return (
     (!barriers[0] && playerPos.y === zombiePos.y && Math.abs(zombiePos.y - playerPos.y) <= ZOMBIE_AGRO_RADIUS) ||
     (!barriers[1] && playerPos.x === zombiePos.x && Math.abs(zombiePos.x - playerPos.x) <= ZOMBIE_AGRO_RADIUS)
@@ -38,7 +34,8 @@ export const useZombies = () => {
     const handledPosition = { ...zombie.position };
     let energy = zombie.stats.energy;
     if (!barriers[0] && Math.abs(zombie.position.x - playerPos.x) !== 1) {
-      const travelDistance = Math.abs(playerPos.x - zombie.position.x) > energy ? energy : Math.abs(playerPos.x - zombie.position.x);
+      const travelDistance =
+        Math.abs(playerPos.x - zombie.position.x) > energy ? energy : Math.abs(playerPos.x - zombie.position.x);
       energy = Math.max(0, energy - travelDistance);
       handledPosition.x =
         playerPos.x > zombie.position.x ? handledPosition.x + travelDistance : handledPosition.x - travelDistance;
@@ -47,11 +44,12 @@ export const useZombies = () => {
       }
     }
     if (!barriers[1] && Math.abs(zombie.position.y - playerPos.y) !== 1) {
-      const travelDistance = Math.abs(playerPos.y - zombie.position.y) > energy ? energy : Math.abs(playerPos.y - zombie.position.y);
+      const travelDistance =
+        Math.abs(playerPos.y - zombie.position.y) > energy ? energy : Math.abs(playerPos.y - zombie.position.y);
       energy = Math.max(0, energy - travelDistance);
       handledPosition.y =
         playerPos.y > zombie.position.y ? handledPosition.y + travelDistance : handledPosition.y - travelDistance;
-      
+
       if (handledPosition.y === playerPos.y && travelDistance) {
         handledPosition.y = playerPos.y > zombie.position.y ? handledPosition.y - 1 : handledPosition.y + 1;
       }

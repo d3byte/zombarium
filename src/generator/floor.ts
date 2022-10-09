@@ -3,5 +3,5 @@ import { TileTypeEnum } from 'types/game/tile.type';
 
 export const floor = () =>
   tileFactory({
-    type: TileTypeEnum.FLOOR
+    type: TileTypeEnum.FLOOR,
   });

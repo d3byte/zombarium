@@ -9,7 +9,11 @@ import { TilesGrid } from './tiles/grid';
 
 export const Game = () => {
   const { openedObject, openedInventory } = useGameContext();
-  const { player: { stats: { hp } } } = usePlayerContext();
+  const {
+    player: {
+      stats: { hp },
+    },
+  } = usePlayerContext();
   const [showDamageAnimation, setShowDamageAnimation] = useState(false);
 
   useLayoutEffect(() => {

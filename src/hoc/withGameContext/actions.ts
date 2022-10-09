@@ -60,7 +60,7 @@ export const deleteZombie = (id: string) => ({
 });
 export const addLootToInventory = (loot: ItemInterface[], id: string, object: ObjectInterface) => ({
   type: GameActionTypeEnum.ADD_LOOT,
-  payload: { loot, lootIds: loot.map(item => item.id), id, object },
+  payload: { loot, lootIds: loot.map((item) => item.id), id, object },
 });
 export const removeItemFromInventory = (item: ItemInterface, entityId: string) => ({
   type: GameActionTypeEnum.REMOVE_INVENTORY_ITEM,

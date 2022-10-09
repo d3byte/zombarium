@@ -6,18 +6,18 @@ import { floor } from './floor';
 export const housePreset = () => {
   const verticalWall = () =>
     tileFactory({
-      type: TileTypeEnum.WALL_VERTICAL
+      type: TileTypeEnum.WALL_VERTICAL,
     });
   return [
     getArray(7, () =>
       tileFactory({
-        type: TileTypeEnum.WALL_HORIZONTAL
+        type: TileTypeEnum.WALL_HORIZONTAL,
       }),
     ),
     ...getArray(5, (y) => [verticalWall(), ...getArray(5, floor), verticalWall()]),
     getArray(7, (index: number) =>
       tileFactory({
-        type: index === 3 ? TileTypeEnum.DOOR : TileTypeEnum.WALL_HORIZONTAL
+        type: index === 3 ? TileTypeEnum.DOOR : TileTypeEnum.WALL_HORIZONTAL,
       }),
     ),
   ];

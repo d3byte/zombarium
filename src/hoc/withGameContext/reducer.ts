@@ -57,10 +57,10 @@ export const gameStateReducer = (state: GameStateInterface, action: GameActionIn
         openedObject: action.payload,
       };
     case GameActionTypeEnum.SET_OPENED_INVENTORY:
-        return {
-          ...state,
-          openedInventory: action.payload,
-        };
+      return {
+        ...state,
+        openedInventory: action.payload,
+      };
     case GameActionTypeEnum.DELETE_ZOMBIE:
       return {
         ...state,
@@ -78,7 +78,7 @@ export const gameStateReducer = (state: GameStateInterface, action: GameActionIn
             if (item.id === action.payload.object.id) {
               return {
                 ...item,
-                loot: item.loot.filter(loot => !action.payload.lootIds.includes(loot.id)),
+                loot: item.loot.filter((loot) => !action.payload.lootIds.includes(loot.id)),
               };
             }
             return item;
@@ -155,7 +155,9 @@ export const gameStateReducer = (state: GameStateInterface, action: GameActionIn
             if (item.id === action.payload.id) {
               return {
                 ...item,
-                inventory: (item as PlayerInterface).inventory.filter(lootItem => lootItem.id !== action.payload.itemId),
+                inventory: (item as PlayerInterface).inventory.filter(
+                  (lootItem) => lootItem.id !== action.payload.itemId,
+                ),
               };
             }
             return item;
