@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.js": "/static/js/main.7d59fdb2.js",
+    "main.js": "/static/js/main.2dad4565.js",
     "static/js/787.4866b394.chunk.js": "/static/js/787.4866b394.chunk.js",
     "static/media/illness.svg": "/static/media/illness.57ddaf143080cb28a65a42857599de02.svg",
     "static/media/attack.svg": "/static/media/attack.cc2acccfe040dbf1a9814744ac11cae6.svg",
@@ -9,10 +9,10 @@
     "static/media/Player.svg": "/static/media/Player.d1be8c581857d27decffa7588540ee3b.svg",
     "static/media/Zombie.svg": "/static/media/Zombie.4ec13c5ad174e90fa5657bb6ced434d2.svg",
     "static/media/energy.svg": "/static/media/energy.fecb34aec144c81814b0c707b01d47c0.svg",
-    "main.7d59fdb2.js.map": "/static/js/main.7d59fdb2.js.map",
+    "main.2dad4565.js.map": "/static/js/main.2dad4565.js.map",
     "787.4866b394.chunk.js.map": "/static/js/787.4866b394.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.7d59fdb2.js"
+    "static/js/main.2dad4565.js"
   ]
 }
