@@ -11,6 +11,11 @@ export const gameStateReducer = (state: GameStateInterface, action: GameActionIn
         ...state,
         turn: action.payload,
       };
+    case GameActionTypeEnum.SET_INFO_OPENED:
+      return {
+        ...state,
+        isInfoOpened: action.payload,
+      };
     case GameActionTypeEnum.RESET_STATE:
       return {
         ...state,

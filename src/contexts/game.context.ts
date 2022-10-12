@@ -10,6 +10,7 @@ export interface GameStateInterface {
   turn: EntityTypeEnum;
   openedObject?: ObjectInterface;
   openedInventory?: boolean;
+  isInfoOpened?: boolean;
 }
 
 export interface GameContextInterface extends GameStateInterface {
@@ -22,6 +23,7 @@ export const GameContext = createContext<GameContextInterface>({
   turn: undefined,
   openedInventory: false,
   openedObject: undefined,
+  isInfoOpened: false,
   dispatch: noop,
   gameOver: noop,
 } as unknown as GameContextInterface);

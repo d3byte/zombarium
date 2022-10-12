@@ -70,3 +70,38 @@ export const Button = styled.button.attrs({ type: 'button' })`
     background: #dee3e1;
   }
 `;
+
+export const ModalContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 50%;
+  height: 50%;
+  padding: 20px;
+  background: white;
+  border-radius: 6px;
+  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.16);
+`;
+
+export const ModalBackdrop = styled.dialog`
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+`;
+
+export const ModalHeader = styled.header`
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 32px;
+`;
+
+export const ModalActions = styled.footer`
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  column-gap: 20px;
+`;

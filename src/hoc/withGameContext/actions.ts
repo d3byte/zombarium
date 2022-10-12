@@ -23,6 +23,7 @@ export enum GameActionTypeEnum {
   REMOVE_INVENTORY_ITEM,
   SET_EFFECTS,
   SET_WEAPON,
+  SET_INFO_OPENED,
 }
 
 export interface GameActionInterface {
@@ -84,4 +85,8 @@ export const setEffects = (buffs: BuffInterface[], debuffs: DebuffInterface[]) =
 export const setWeapon = (weapon?: WeaponInterface) => ({
   type: GameActionTypeEnum.SET_WEAPON,
   payload: weapon,
+});
+export const setIsInfoOpened = (value: boolean) => ({
+  type: GameActionTypeEnum.SET_INFO_OPENED,
+  payload: value,
 });

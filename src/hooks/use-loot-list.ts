@@ -30,9 +30,13 @@ export const useLootList = () => {
   );
 
   const takeAll = () => {
-    dispatch(
-      addLootToInventory([...(openedObject?.loot || []), ...takenLoot], player.id, openedObject as ObjectInterface),
-    );
+    const newTakenLoot = [...takenLoot];
+    openedObject?.loot?.forEach((item) => {
+      if (!takenLootItemsIds.includes(item.id)) {
+        newTakenLoot.push(item);
+      }
+    });
+    setTakenLoot(newTakenLoot);
     closeLootList();
   };
 

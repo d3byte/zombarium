@@ -8,11 +8,13 @@ import { EntityTypeEnum } from 'types/entities/entity.type';
 
 import { gameStateReducer } from './reducer';
 import { resetState } from './actions';
+import { STORAGE_KEYS } from 'constants/storage-keys.const';
 
 const defaultState: GameStateInterface = {
   currentLevel: levelGenerator(),
   turn: EntityTypeEnum.PLAYER,
   openedObject: undefined,
+  isInfoOpened: !localStorage.getItem(STORAGE_KEYS.WAS_INFO_SHOWN),
 };
 
 export const withGameContext = (Child: FC<any>) => {

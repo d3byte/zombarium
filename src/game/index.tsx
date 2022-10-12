@@ -3,6 +3,7 @@ import { useGameContext } from 'contexts/game.context';
 import { usePlayerContext } from 'contexts/player.context';
 import React, { useLayoutEffect, useState } from 'react';
 import { Footer } from './footer';
+import { Info } from './info';
 import { LootList } from './loot-list';
 import { DAMAGE_ANIMATION_DURATION, GameLayout, GlobalStyles, TilesWrapper } from './styles';
 import { TilesGrid } from './tiles/grid';
@@ -34,6 +35,7 @@ export const Game = () => {
       </TilesWrapper>
       <Footer />
       {!!(openedObject || openedInventory) && <LootList />}
+      <Info />
       <GlobalStyles />
     </GameLayout>
   );

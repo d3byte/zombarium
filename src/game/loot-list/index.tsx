@@ -1,21 +1,11 @@
 import { useGameContext } from 'contexts/game.context';
 import { usePlayerContext } from 'contexts/player.context';
-import { Button } from 'game/styles';
+import { Button, ModalActions, ModalBackdrop, ModalContainer, ModalHeader } from 'game/styles';
 import { useLootList } from 'hooks/use-loot-list';
 import { ConsumableInterface } from 'types/items/consumable.type';
 import { ItemTypeEnum } from 'types/items/item.type';
 import { WeaponInterface } from 'types/items/weapon.type';
-import {
-  LootListBackdrop,
-  LootListContainer,
-  LootListActions,
-  StyledButton,
-  LootListHeader,
-  LootListItems,
-  LootListItem,
-  EmptyInventory,
-  LootItemAction,
-} from './styles';
+import { StyledButton, LootListItems, LootListItem, EmptyInventory, LootItemAction } from './styles';
 
 export const LootList = () => {
   const { openedObject } = useGameContext();
@@ -26,9 +16,9 @@ export const LootList = () => {
     useLootList();
 
   return (
-    <LootListBackdrop>
-      <LootListContainer>
-        <LootListHeader>{isInventory ? 'Инвентарь' : openedObject?.title}</LootListHeader>
+    <ModalBackdrop>
+      <ModalContainer>
+        <ModalHeader>{isInventory ? 'Инвентарь' : openedObject?.title}</ModalHeader>
         {lootList.length === 0 && <EmptyInventory>Нет предметов</EmptyInventory>}
         <LootListItems>
           {lootList.map((item) => (
@@ -50,13 +40,13 @@ export const LootList = () => {
             </LootListItem>
           ))}
         </LootListItems>
-        <LootListActions>
-          {!isInventory && <StyledButton onClick={takeAll}>Взять все</StyledButton>}
+        <ModalActions>
+          {!isInventory && lootList.length !== 0 && <StyledButton onClick={takeAll}>Взять все</StyledButton>}
           <StyledButton closeBtn onClick={closeLootList}>
             Закрыть
           </StyledButton>
-        </LootListActions>
-      </LootListContainer>
-    </LootListBackdrop>
+        </ModalActions>
+      </ModalContainer>
+    </ModalBackdrop>
   );
 };
